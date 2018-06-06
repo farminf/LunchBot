@@ -1,9 +1,9 @@
 # LunchBot for Google Hangout Chat
 Google Hangout chat Bot for voting and choosing a place to eat...
 
-It is using google Script for bot implementation and a firebase realtime database for saving the places data and votes.
+It uses Google Script for bot implementation and firebase realtime database for saving the places data and votes.
 
-You can configure Google Script triggers for asking the users for voting and also announcing the results.
+You can configure Google Script triggers for asking users to vote and also announcing the results.
 
 
 
