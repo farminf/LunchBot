@@ -34,8 +34,8 @@ function findCommon(arr) {
 * to get all the votes from firebase
 */
 function getVotes(space) {
-  var firebaseUrl = "https://anomaliesapp.firebaseio.com/";
-  var secret = "cyMhyEpv4auOxtCwuGqmoEHahe4Yvmy2zkIKeSU5";
+  var firebaseUrl = "https://***appname***.firebaseio.com/";
+  var secret = "***secret***";
   var base = FirebaseApp.getDatabaseByUrl(firebaseUrl, secret);
   var data = base.getData();
   var spaceName = space.split('/')[1]
@@ -50,8 +50,8 @@ function getVotes(space) {
 * to get all the places from firebase
 */
 function getPlaces() {
-  var firebaseUrl = "https://anomaliesapp.firebaseio.com/";
-  var secret = "cyMhyEpv4auOxtCwuGqmoEHahe4Yvmy2zkIKeSU5";
+  var firebaseUrl = "https://***appname***.firebaseio.com/";
+  var secret = "***secret***";
   var base = FirebaseApp.getDatabaseByUrl(firebaseUrl, secret);
   var data = base.getData();
   return data.place
@@ -61,8 +61,8 @@ function getPlaces() {
 * insert vote for each person in the related space
 */
 function updateVotes(space ,person , vote) {
-  var firebaseUrl = "https://anomaliesapp.firebaseio.com/";
-  var secret = "cyMhyEpv4auOxtCwuGqmoEHahe4Yvmy2zkIKeSU5";
+  var firebaseUrl = "https://***appname***.firebaseio.com/";
+  var secret = "***secret***";
   var base = FirebaseApp.getDatabaseByUrl(firebaseUrl, secret);
   base.setData(space + "/votes/" + person, vote);
   return base.getData().votes
@@ -73,8 +73,8 @@ function updateVotes(space ,person , vote) {
 * not using this at the moment
 */
 function addData(person , text) {
-  var firebaseUrl = "https://anomaliesapp.firebaseio.com/";
-  var secret = "cyMhyEpv4auOxtCwuGqmoEHahe4Yvmy2zkIKeSU5";
+  var firebaseUrl = "https://***appname***.firebaseio.com/";
+  var secret = "***secret***";
   var base = FirebaseApp.getDatabaseByUrl(firebaseUrl, secret);
   base.setData("votes/" + person, 4);
   return base.getData().votes
@@ -84,8 +84,8 @@ function addData(person , text) {
 * Deletes all the votes in the passed space
 */
 function deleteVotes(space) {
-  var firebaseUrl = "https://anomaliesapp.firebaseio.com/";
-  var secret = "cyMhyEpv4auOxtCwuGqmoEHahe4Yvmy2zkIKeSU5";
+  var firebaseUrl = "https://***appname***.firebaseio.com/";
+  var secret = "***secret***";
   var base = FirebaseApp.getDatabaseByUrl(firebaseUrl, secret);
   base.setData(space + "/votes/" , {});
   var data = base.getData();
