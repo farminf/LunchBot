@@ -35,7 +35,7 @@ function findCommon(arr) {
 */
 function getVotes(space) {
   var firebaseUrl = "https://anomaliesapp.firebaseio.com/";
-  var secret = "cyMhyEpv4auOxtCwuGqmoEHahe4Yvmy2zkIKeSU5";
+  var secret = "SECRET";
   var base = FirebaseApp.getDatabaseByUrl(firebaseUrl, secret);
   var data = base.getData();
   var spaceName = space.split('/')[1]
@@ -51,7 +51,7 @@ function getVotes(space) {
 */
 function getPlaces() {
   var firebaseUrl = "https://anomaliesapp.firebaseio.com/";
-  var secret = "cyMhyEpv4auOxtCwuGqmoEHahe4Yvmy2zkIKeSU5";
+  var secret = "SECRET";
   var base = FirebaseApp.getDatabaseByUrl(firebaseUrl, secret);
   var data = base.getData();
   return data.place
@@ -62,7 +62,7 @@ function getPlaces() {
 */
 function getSpacePlaces(space) {
   var firebaseUrl = "https://anomaliesapp.firebaseio.com/";
-  var secret = "cyMhyEpv4auOxtCwuGqmoEHahe4Yvmy2zkIKeSU5";
+  var secret = "SECRET";
   var base = FirebaseApp.getDatabaseByUrl(firebaseUrl, secret);
   var data = base.getData();
   var spaceName = space.split('/')[1]
@@ -85,7 +85,7 @@ function getSpacePlaces(space) {
 */
 function updateVotes(space ,person , vote) {
   var firebaseUrl = "https://anomaliesapp.firebaseio.com/";
-  var secret = "cyMhyEpv4auOxtCwuGqmoEHahe4Yvmy2zkIKeSU5";
+  var secret = "SECRET";
   var base = FirebaseApp.getDatabaseByUrl(firebaseUrl, secret);
   base.setData(space + "/votes/" + person, vote);
   return base.getData().votes
@@ -97,7 +97,7 @@ function updateVotes(space ,person , vote) {
 */
 function addPlace(space , place) {
   var firebaseUrl = "https://anomaliesapp.firebaseio.com/";
-  var secret = "cyMhyEpv4auOxtCwuGqmoEHahe4Yvmy2zkIKeSU5";
+  var secret = "SECRET";
   var base = FirebaseApp.getDatabaseByUrl(firebaseUrl, secret);
   base.setData(space + "/places/" + place, place);
   return base.getData().votes
@@ -109,7 +109,7 @@ function addPlace(space , place) {
 */
 function deleteVotes(space) {
   var firebaseUrl = "https://anomaliesapp.firebaseio.com/";
-  var secret = "cyMhyEpv4auOxtCwuGqmoEHahe4Yvmy2zkIKeSU5";
+  var secret = "SECRET";
   var base = FirebaseApp.getDatabaseByUrl(firebaseUrl, secret);
   base.setData(space + "/votes/" , {});
   var data = base.getData();
@@ -128,7 +128,7 @@ function deleteSpacePlace(space , place) {
   Logger.log('space: %s', space);
   Logger.log('place: %s', place);
   var firebaseUrl = "https://anomaliesapp.firebaseio.com/";
-  var secret = "cyMhyEpv4auOxtCwuGqmoEHahe4Yvmy2zkIKeSU5";
+  var secret = "SECRET";
   var base = FirebaseApp.getDatabaseByUrl(firebaseUrl, secret);
   base.removeData(space + "/places/" + place );
   var data = base.getData();
@@ -337,7 +337,7 @@ function onTriggerResult(){
 }
 
 var SCOPE = 'https://www.googleapis.com/auth/chat.bot';
-var SERVICE_ACCOUNT_PRIVATE_KEY = '-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDLucNwpu1I8y8X\nnvxeTbGFIbLKsReBh5e28+up/xSJpKa+9ozEuVdJI1/3exLBxkYrJO5W3uozpEu0\nQL+AtWXTl4amBdSx60tqX81Gb/aXVphgAQdA5iFQyzIspzUJ7wc453hCoPwcNY9v\nAg9FNL/YZZ0AfGWe5c4yyJxAYzIy/u6VDeSSsaSAk4aOflK5MMKs++uZXMmKPIKK\nkGEnWqNrdlGU+raMbToNLetpn4KcaI85vvo/jcEEe84mRjx4Xd8I/ONA0qDH1szF\nRuvLEtR8fGGxBZgShhKt2G+Q9FsIvMUvzPn7Gx/ab9kUrgamDAdAxKFK7Kyo35XM\naqbq0rSrAgMBAAECggEAZVUzB1egc0ayx9cGxIl0oTnPys4nWQBu0EunjtkYCBbj\n8dyEzF08M17rHxgSjlvnDxLBkmgyqhkwpqoGFykjSwn1qaMA1raovnKEkmKij0g9\nZpNcXkWZkKxheqB420YPm5hW0x1sCUQC4j5uBghk3Gg+nb1CdrTryYrLXaN5lq8f\nrs7aS81LFdJXnQMc0YnzguA5odiGPe0TVX/Gjr4kDRBhcaOeflUEEWFdKNyxQHny\nxWEAKSj7lCxXMme2taSsFXxbaTDQRf7+PYY2cza/G5VWBMiTgFSEeETbMfO9j5FX\n/BjiWWC+f4i+kH3ydnQ89OfZRqdDNUixZF/TXQ09IQKBgQDzJDNqEPxOGozigH0K\nRh4+2Ayaxp7mPqewTn9KPfEwZJDaIgACLuyX6jW3EjrhDjNsudxtX2GetuI/Zd64\n6Lq19qEGl9thbwmJGMtE7sj2Z3aCfUhEG2ISv0qw+OgXMuLHYMnZZX4djiD5giyn\nQZc1rEQkFl7P0GPkpH+1H8ZCWQKBgQDWf+1tdxQKZtzlvopKwNQ/B+eJedeBJFIL\nBleEVbPgSZkxIYxto6rNV48vyOOqCySqIV15DYYUSKsrZvbnxgSfDr4tcSiuEj0D\nnmACMr5MEnGPBQISsqT9pfKpsq3DTIXK4HyZBQrQYXR5UDhQc8/Pm5hMdtDKAl+G\nZP2fH39mowKBgQCVo3v5FUcSkoiOheFux0SqDLGFOCRnM7xkZ4szl/euftYfSbmT\nnmmB/WTdrNyL0f+YNLMSpRchZRDNT9bJGoJ+prDnq+IajwnhVF8Vp5gK/hYTrSMi\nt2+edhhz3lyImoqzhj/0CeCaM/TbWmA898MmB0VQqGvlni08dHkccdfE0QKBgCx0\n4TGx3250eU4ImsL5ikPyEHP208qJS5PLYbIkzR4sQtri+Cb1J/5dKmkd+smQe63j\nMmtXeTWVBhz9vyi0atrIhHQIowTI9OpeFcn+2GAN5olc4VwcuIN1tIClbswufQBa\nXJieaepceHZ4QOOzzRtbRUp7ybREn6XMIqCrN41/AoGBAOtBU5Wj4d1uyOjYqy50\njIU8hFwveApydu7HE/0cGg3QZtCk4j+mnAEOpDmlBsnsrTaJbh/R+wCuWKxq42t/\nMGQ866oi38qyyQS8EF8PxtYhO+eQZAGlr9FeH7GhgFua5OZ/K2uOp9n3jgQUHSqS\nsVZhl9aOF5bMHJn9lDvwZ05S\n-----END PRIVATE KEY-----\n';
+var SERVICE_ACCOUNT_PRIVATE_KEY = 'SECRET';
 var SERVICE_ACCOUNT_EMAIL = 'starting-account-y65d2u4mrjje@poc-sm-aptar-1499416259786.iam.gserviceaccount.com';
 
 // Posts a message into the given space ID via the API, using
