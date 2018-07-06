@@ -7,5 +7,6 @@ You can configure Google Script triggers for asking users to vote and also annou
 
 
 
-![LunchBot_screenshot](https://github.com/farminf/LunchBot/blob/master/lunchbot.png?raw=true)
+![LunchBot_screenshot](https://github.com/farminf/LunchBot/blob/master/lunchbot-1.png?raw=true)
+![LunchBot_screenshot](https://github.com/farminf/LunchBot/blob/master/lunchbot-2.png?raw=true)
 
