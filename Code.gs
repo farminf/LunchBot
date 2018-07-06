@@ -14,7 +14,7 @@ function charIdGenerator() {
 /**
 * to find the place with highest votes
 */
-function findCommon(arr) {
+function findCommonNum(arr) {
   var max = 1,
       m = [],
       val = arr[0],
@@ -30,12 +30,33 @@ function findCommon(arr) {
   } return val;    
 }
 
+function findCommon(array)
+{
+    if(array.length == 0)
+        return null;
+    var modeMap = {};
+    var maxEl = array[0], maxCount = 1;
+    for(var i = 0; i < array.length; i++)
+    {
+        var el = array[i];
+        if(modeMap[el] == null)
+            modeMap[el] = 1;
+        else
+            modeMap[el]++;  
+        if(modeMap[el] > maxCount)
+        {
+            maxEl = el;
+            maxCount = modeMap[el];
+        }
+    }
+    return maxEl;
+}
 /**
 * to get all the votes from firebase
 */
 function getVotes(space) {
-  var firebaseUrl = "https://anomaliesapp.firebaseio.com/";
-  var secret = "SECRET";
+  var firebaseUrl = "XXX";
+  var secret = "XXX";
   var base = FirebaseApp.getDatabaseByUrl(firebaseUrl, secret);
   var data = base.getData();
   var spaceName = space.split('/')[1]
@@ -50,8 +71,8 @@ function getVotes(space) {
 * not using this at the moment
 */
 function getPlaces() {
-  var firebaseUrl = "https://anomaliesapp.firebaseio.com/";
-  var secret = "SECRET";
+  var firebaseUrl = "XXX";
+  var secret = "XXX";
   var base = FirebaseApp.getDatabaseByUrl(firebaseUrl, secret);
   var data = base.getData();
   return data.place
@@ -61,8 +82,8 @@ function getPlaces() {
 * to get specific places for a space from firebase
 */
 function getSpacePlaces(space) {
-  var firebaseUrl = "https://anomaliesapp.firebaseio.com/";
-  var secret = "SECRET";
+  var firebaseUrl = "XXX";
+  var secret = "XXX";
   var base = FirebaseApp.getDatabaseByUrl(firebaseUrl, secret);
   var data = base.getData();
   var spaceName = space.split('/')[1]
@@ -84,8 +105,8 @@ function getSpacePlaces(space) {
 * insert vote for each person in the related space
 */
 function updateVotes(space ,person , vote) {
-  var firebaseUrl = "https://anomaliesapp.firebaseio.com/";
-  var secret = "SECRET";
+  var firebaseUrl = "XXX";
+  var secret = "XXX";
   var base = FirebaseApp.getDatabaseByUrl(firebaseUrl, secret);
   base.setData(space + "/votes/" + person, vote);
   return base.getData().votes
@@ -96,8 +117,8 @@ function updateVotes(space ,person , vote) {
 * insert place for each space in the related space
 */
 function addPlace(space , place) {
-  var firebaseUrl = "https://anomaliesapp.firebaseio.com/";
-  var secret = "SECRET";
+  var firebaseUrl = "XXX";
+  var secret = "XXX";
   var base = FirebaseApp.getDatabaseByUrl(firebaseUrl, secret);
   base.setData(space + "/places/" + place, place);
   return base.getData().votes
@@ -108,8 +129,8 @@ function addPlace(space , place) {
 * Deletes all the votes in the passed space
 */
 function deleteVotes(space) {
-  var firebaseUrl = "https://anomaliesapp.firebaseio.com/";
-  var secret = "SECRET";
+  var firebaseUrl = "XXX";
+  var secret = "XXX";
   var base = FirebaseApp.getDatabaseByUrl(firebaseUrl, secret);
   base.setData(space + "/votes/" , {});
   var data = base.getData();
@@ -127,8 +148,8 @@ function deleteVotes(space) {
 function deleteSpacePlace(space , place) {
   Logger.log('space: %s', space);
   Logger.log('place: %s', place);
-  var firebaseUrl = "https://anomaliesapp.firebaseio.com/";
-  var secret = "SECRET";
+  var firebaseUrl = "XXX";
+  var secret = "XXX";
   var base = FirebaseApp.getDatabaseByUrl(firebaseUrl, secret);
   base.removeData(space + "/places/" + place );
   var data = base.getData();
@@ -147,7 +168,7 @@ function showResults(spaceId){
   var votesArray = [];
   var places = getSpacePlaces(spaceId);
   var allVotes = getVotes(spaceId);
-  if(allVotes == 'No Votes' ){
+  if(allVotes == 'No vote for today' ){
   
   }else{
     for (var key in allVotes) {
@@ -155,7 +176,7 @@ function showResults(spaceId){
         votesArray.push(allVotes[key])
       }
     }
-    var response = places[Number(findCommon(votesArray))] + ' won. ' + votesArray.length + ' people participated.'
+    var response = findCommon(votesArray) + ' won. ' + votesArray.length + ' people participated.'
     postMessage(spaceId, {'text' : response})
   }
 }
@@ -166,7 +187,7 @@ function generateCardPlaces(places){
   var widgets = []
   for (index in places){
       widgets.push(
-        '{"widgets": [ {"buttons":[{ "textButton": { "text": "'  + String(places[index]) + '", "onClick": {"action": { "actionMethodName": "' + String(index) +'"}}}}]}]}'
+        '{"widgets": [ {"buttons":[{ "textButton": { "text": "'  + String(places[index]) + '", "onClick": {"action": { "actionMethodName": "' + String(places[index]) +'"}}}}]}]}'
       )
   }
   var result =  '{"cards": [{ "header":{ "imageUrl": "https://goo.gl/aeDtrS","title":"Hey guys... Where do you want to eat today? Click to Vote!"},"sections": [' + widgets + ']}]}'
@@ -175,15 +196,17 @@ function generateCardPlaces(places){
 }
 
 function createWelcomeCard (roomName){
-  var header = "Thanks for adding me to <b>"+ roomName +"</b>!"
-  var message = "You can add a new place by mentioning me and typing \`add\` and name of the place(example: <i>@lunchbot add KFC</i>).\
-<br>You can delete a place by mentioning me and typing \`delete\` and name of the place(example: <i>@lunchbot delete KFC</i>).\
-<br>You can get the list of places to eat by mentioning me and typing \`places\` and then by clicking on each place, you can vote.\
-<br>Whenever you want you can ask me for result by typing result.<i><br>note 1: \
-I will count only last vote of each person.  <br>note 2: In the room(group), try to call me by @LunchBot \
+  var subtitle = "Thanks for adding me!"
+  var message = "<b>Before start,LunchBot works only in the rooms and you need to Login, in order to communicate with bot.</b> \
+<br><br><li>- You can add a new place by mentioning me and typing <b>add</b> and name of the place(example: <font color='#830D0D'>@lunchbot add KFC</font>). \
+<br>- You can delete a place by mentioning me and typing <b>delete</b> and name of the place(example: <font color='#830D0D'>@lunchbot delete KFC</font>). \
+<br>- You can get the list of places to eat by mentioning me and typing <b>places</b> and then by clicking on each place, you can vote. \
+<br>- Whenever you want you can ask me for result by typing <b>result</b>. \
+<br><br><i>note 1: I will count only last vote of each person. \
+<br>note 2: In the room(group), try to call me by <font color='#830D0D'>@lunchbot</font> \
 <br>note 3: If there are 2 places equaly with highest votes, the one who got the first vote wins</i>"
 
- var  msg =  '{ "cards": [{ "header":{ "imageUrl": "https://goo.gl/aeDtrS","title":"'+ String(header) +'"},"sections": [{"widgets": [{"textParagraph": {"text": "'+ String(message) + '"}}]}]}]}' 
+ var  msg =  '{ "cards": [{ "header":{ "imageUrl": "https://goo.gl/aeDtrS","title": "LunchBot","subtitle":"'+ String(subtitle) +'"},"sections": [{"widgets": [{"textParagraph": {"text": "'+ String(message) + '"}}]}]}]}' 
  
  return msg
 }
@@ -201,21 +224,23 @@ I will count only last vote of each person.  <br>note 2: In the room(group), try
 function onMessage(event) {
   
   if(event.user.type.toLowerCase() !== 'human'){
-    return {'text': 'fuck off Non-Human!'}  
+    return {'text': 'I do not talk with Non-Human!'}
+  } else if(event.message.text.toLowerCase() === 'help' || event.message.text.toLowerCase() === '@lunchbot help' || event.message.text.toLowerCase().indexOf("help") != -1){
+    return JSON.parse(String(createWelcomeCard(event.space.displayName)));
   }else if (event.space.type == "DM"){
-    return {'text': 'This Bot works only in the rooms!'}
+    return {'text': 'LunchBot works only in the rooms!'}
   }else if (event.message.text.toLowerCase().indexOf("add") != -1) {
     var receivedText = event.message.text.toLowerCase();
     var spaceName = event.space.name
     var placeName = receivedText.slice(receivedText.indexOf("add") + 4)
     addPlace(spaceName , placeName )
-    return {'text': placeName+ ' added for ' + spaceName}
+    return {'text': placeName+ ' added in LunchBot for ' + event.space.displayName + ' as a new place to eat.'}
   }else if (event.message.text.toLowerCase().indexOf("delete") != -1) {
     var receivedText = event.message.text.toLowerCase();
     var spaceName = event.space.name
     var placeName = receivedText.slice(receivedText.indexOf("delete") + 7)
     deleteSpacePlace(spaceName , placeName )
-    return {'text': placeName+ ' deleted from ' + spaceName}
+    return {'text': placeName+ ' deleted from LunchBot for ' + event.space.displayName }
   }else if(event.message.text.toLowerCase() === 'places' || event.message.text.toLowerCase() === '@lunchbot places'){
         var places = getSpacePlaces(event.space.name)
     Logger.log('log: %s', places);
@@ -233,15 +258,13 @@ function onMessage(event) {
           votesArray.push(allVotes[key])
         }
       }
-      var response = places[Number(findCommon(votesArray))] + ' won. ' + votesArray.length + ' people participated.'
+      var response = findCommon(votesArray) + ' won. ' + votesArray.length + ' people participated.'
       return {'text': response }
     }
   } else if (event.message.text.toLowerCase() === 'reset' || event.message.text.toLowerCase() === '@lunchbot reset') {
     return {'text': JSON.stringify(deleteVotes(event.space.name))}
   } else if (event.message.text.toLowerCase() === 'message' || event.message.text.toLowerCase() === '@lunchbot message') {
     return { 'text': JSON.stringify(event)};
-  } else if(event.message.text.toLowerCase() === 'help' || event.message.text.toLowerCase() === '@lunchbot help'){
-    return JSON.parse(String(createWelcomeCard(event.space.displayName)));
   }else{
     return { 'text': 'No instruction for \`' + event.message.text + '\`' + ' use \`help\` for instructions '};
   }
@@ -255,21 +278,17 @@ function onCardClick(event){
    Logger.log('event: %s', event);
   //return { 'text': JSON.stringify(event)};
   if(event.type == "CARD_CLICKED"){
-    var vote = Number(event.action.actionMethodName);
+    var vote = event.action.actionMethodName;
+    Logger.log('vote: %s', vote);
     var places = getSpacePlaces(event.space.name);
-    if(places[vote]){
-      Logger.log('vote: %s', vote);
-      Logger.log('place: %s', places[vote]);
+    Logger.log('places: %s', places);
+    if(places.indexOf(vote) > -1){
       updateVotes(event.space.name ,event.user.displayName , vote)
-      if(places[vote].toLowerCase().indexOf("casa") != -1){
-        return {'text': 'aaaa bella vita ' + event.user.displayName }
-      }else{
-        return {'text': event.user.displayName + ' voted for ' + places[vote] }
-      }
+      return {'text': event.user.displayName + ' voted for ' + vote }
+      
     }else{
       return {'text': 'Wrong option, try \`places\` to see all options' }
     }
-    return { 'text': JSON.stringify(event)};
   }
 }
 
@@ -337,8 +356,8 @@ function onTriggerResult(){
 }
 
 var SCOPE = 'https://www.googleapis.com/auth/chat.bot';
-var SERVICE_ACCOUNT_PRIVATE_KEY = 'SECRET';
-var SERVICE_ACCOUNT_EMAIL = 'starting-account-y65d2u4mrjje@poc-sm-aptar-1499416259786.iam.gserviceaccount.com';
+var SERVICE_ACCOUNT_PRIVATE_KEY = 'XXX';
+var SERVICE_ACCOUNT_EMAIL = 'starting-account-xxx.iam.gserviceaccount.com';
 
 // Posts a message into the given space ID via the API, using
 // service account authentication.
